@@ -11,34 +11,31 @@ class BSTreeTest {
 	BSTree tree0;
 	BSTree tree;
 	BSTree tree2;
-	BSTree tree3;
-	BSTree tree4;
-	BSTree tree4A;
-	BSTree tree5;
-	BSTree tree6;
-	BSTree tree6A;
-	BSTree tree7;
-	BSTree tree7A;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		tree0 = new BSTree();
 		tree = new BSTree();
 		tree2 = new BSTree();
-		tree3 = new BSTree();
-		tree4 = new BSTree();
-		tree4A = new BSTree();
-		tree5 = new BSTree();
-		tree6 = new BSTree();
-		tree6A = new BSTree();
-		tree7 = new BSTree();
-		tree7A = new BSTree();
 	}
 
 	@Test
-	void myEqualsTest() {		
+	void myEqualsEmptyTest() {		
 		assertEquals(true, tree.myEquals(tree0)); // compare two empty
 
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		assertEquals(false, tree.myEquals(tree0)); // compare full against empty
+		assertEquals(false, tree0.myEquals(tree)); // compare empty against full
+	}
+	
+	@Test
+	void myEqualsSameTest() {
 		tree.insert(15);
 		tree.insert(10);
 		tree.insert(5);
@@ -54,103 +51,198 @@ class BSTreeTest {
 		tree2.insert(11);
 		tree2.insert(20);
 		
-		// same values, different structure
-		tree3.insert(20);
-		tree3.insert(5);
-		tree3.insert(15);
-		tree3.insert(10);
-		tree3.insert(25);
-		tree3.insert(11);
-		
-		// one additional value to right
-		tree4.insert(15);
-		tree4.insert(10);
-		tree4.insert(5);
-		tree4.insert(25);
-		tree4.insert(11);
-		tree4.insert(20);
-		tree4.insert(30);
-		
-		// one additional value to left
-		tree4A.insert(15);
-		tree4A.insert(10);
-		tree4A.insert(5);
-		tree4A.insert(25);
-		tree4A.insert(11);
-		tree4A.insert(20);
-		tree4A.insert(1);
-	
-		// same structure, different values
-		tree5.insert(16);
-		tree5.insert(11);
-		tree5.insert(6);
-		tree5.insert(26);
-		tree5.insert(12);
-		tree5.insert(21);
-		
-		// one less value from the right
-		tree6.insert(15);
-		tree6.insert(10);
-		tree6.insert(5);
-		tree6.insert(11);
-		tree6.insert(20);
-
-		// one less value from the left
-		tree6A.insert(15);
-		tree6A.insert(10);
-		tree6A.insert(25);
-		tree6A.insert(11);
-		tree6A.insert(20);
-		
-		// one value is off on right
-		tree7.insert(15);
-		tree7.insert(10);
-		tree7.insert(5);
-		tree7.insert(24);
-		tree7.insert(11);
-		tree7.insert(20);
-		
-		// one value is off on left
-		tree7A.insert(15);
-		tree7A.insert(9);
-		tree7A.insert(5);
-		tree7A.insert(25);
-		tree7A.insert(11);
-		tree7A.insert(20);
-		
-		assertEquals(false, tree.myEquals(tree0)); // compare full against empty
-		assertEquals(false, tree0.myEquals(tree)); // compare empty against full
-		
 		assertEquals(true, tree.myEquals(tree));
 		
 		assertEquals(true, tree.myEquals(tree2));
 		assertEquals(true, tree2.myEquals(tree));
-				
-		assertEquals(false, tree.myEquals(tree3));
-		assertEquals(false, tree3.myEquals(tree));
-
-		assertEquals(false, tree.myEquals(tree4));
-		assertEquals(false, tree4.myEquals(tree));
-
-		assertEquals(false, tree.myEquals(tree4A));
-		assertEquals(false, tree4A.myEquals(tree));
-		
-		assertEquals(false, tree.myEquals(tree5));
-		assertEquals(false, tree5.myEquals(tree));
-		
-		assertEquals(false, tree.myEquals(tree6));
-		assertEquals(false, tree6.myEquals(tree));
-		
-		assertEquals(false, tree.myEquals(tree6A));
-		assertEquals(false, tree6A.myEquals(tree));
-
-		assertEquals(false, tree.myEquals(tree7));
-		assertEquals(false, tree7.myEquals(tree));
-
-		assertEquals(false, tree.myEquals(tree7A));
-		assertEquals(false, tree7A.myEquals(tree));
 	}
 	
+	@Test 
+	void myEqualsDifferentStructureTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		// same values, different structure
+		tree2.insert(20);
+		tree2.insert(5);
+		tree2.insert(15);
+		tree2.insert(10);
+		tree2.insert(25);
+		tree2.insert(11);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+	
+	@Test
+	void myEqualsAdditionalValRightTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		// one additional value to right
+		tree2.insert(15);
+		tree2.insert(10);
+		tree2.insert(5);
+		tree2.insert(25);
+		tree2.insert(11);
+		tree2.insert(20);
+		tree2.insert(30);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+	
+	@Test
+	void myEqualsAdditionalValLeftTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		// one additional value to left
+		tree2.insert(15);
+		tree2.insert(10);
+		tree2.insert(5);
+		tree2.insert(25);
+		tree2.insert(11);
+		tree2.insert(20);
+		tree2.insert(1);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+	
+	@Test
+	void myEqualsDifferentValsTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+
+		// same structure, different values
+		tree2.insert(16);
+		tree2.insert(11);
+		tree2.insert(6);
+		tree2.insert(26);
+		tree2.insert(12);
+		tree2.insert(21);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+	
+	@Test
+	void myEqualsLessValRightTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+
+		// one less value from the right
+		tree2.insert(15);
+		tree2.insert(10);
+		tree2.insert(5);
+		tree2.insert(25);
+		tree2.insert(20);
+
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+
+	@Test
+	void myEqualsLessValLeftTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		// one less value from the left
+		tree2.insert(15);
+		tree2.insert(10);
+		tree2.insert(25);
+		tree2.insert(11);
+		tree2.insert(20);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+	
+	@Test
+	void myEqualsOneValWrongRightTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		// one value is off on right
+		tree2.insert(15);
+		tree2.insert(10);
+		tree2.insert(5);
+		tree2.insert(24);
+		tree2.insert(11);
+		tree2.insert(20);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+	
+	@Test
+	void myEqualsOneValWrongLeftTest() {
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(5);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		// one value is off on left
+		tree2.insert(15);
+		tree2.insert(9);
+		tree2.insert(5);
+		tree2.insert(25);
+		tree2.insert(11);
+		tree2.insert(20);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
+	
+	@Test
+	void myEqualsLessValNoMatchTest() { // one less value
+		tree.insert(15);
+		tree.insert(10);
+		tree.insert(25);
+		tree.insert(11);
+		tree.insert(20);
+		
+		// remaining node from subtracted pair is wrong
+		tree2.insert(15);
+		tree2.insert(10);
+		tree2.insert(25);
+		tree2.insert(12);
+		tree2.insert(20);
+		
+		assertEquals(false, tree.myEquals(tree2));
+		assertEquals(false, tree2.myEquals(tree));
+	}
 	
 	@Test
 	void getSizeTest() {
