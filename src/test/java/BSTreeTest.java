@@ -244,6 +244,13 @@ class BSTreeTest {
 		assertEquals(false, tree2.myEquals(tree));
 	}
 	
+	
+	
+	
+	// end of myEquals tests 
+	
+	
+	
 	@Test
 	void getSizeTest() {
 		assertEquals(0, tree.getSize());
