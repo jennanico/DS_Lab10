@@ -24,6 +24,9 @@ public class BSTNode<T extends Comparable<T>>
 
    public BSTNode(T val, BSTNode<T> l,BSTNode<T> r)
    {
+	   this.val = val;
+	   this.left = l;
+	   this.right = r;
    }
 
 
@@ -33,6 +36,17 @@ public class BSTNode<T extends Comparable<T>>
     */
    public void insert(T target)
    {
+	   if (target.compareTo(val) < 0  && left == null)
+	   {
+		   left = new BSTNode<T>(target);
+	   }
+	   else if (target.compareTo(val) > 0 && right == null)
+	   {
+		   right = new BSTNode<T>(target);
+	   }
+	   
+	   if (target.compareTo(val) < 0) { left.insert(target); }
+	   else if (target.compareTo(val) > 0) { right.insert(target); }
    }
 
 
@@ -42,7 +56,13 @@ public class BSTNode<T extends Comparable<T>>
     */
    public T retrieve(T target)
    {
-	return target;
+	   if (target.equals(val)) { return target; }
+	   
+	   if (target.compareTo(val) < 0 && left == null) { return null; }
+	   if (target.compareTo(val) > 0 && right == null) { return null; }
+	   
+	   if (target.compareTo(val) < 0) { return left.retrieve(target); }
+	   else { return right.retrieve(target); } 
    }
 
 
@@ -52,7 +72,16 @@ public class BSTNode<T extends Comparable<T>>
      */
    public int retrieveDepth(T target)
    {
-	return 0;
+	   int sum = 0;
+	   if (target.equals(val)) { return sum; }
+	   
+	   if (target.compareTo(val) < 0 && left == null) { return sum + 1; }
+	   if (target.compareTo(val) > 0 && right == null) { return sum + 1; }
+	   
+	   if (target.compareTo(val) < 0) { sum = left.retrieveDepth(target); }
+	   else if (target.compareTo(val) > 0) { sum = right.retrieveDepth(target); }
+	   
+	   return sum + 1;
    }
 
    /**
@@ -60,7 +89,8 @@ public class BSTNode<T extends Comparable<T>>
     */
    public T getLargest()
    {
-	return null;
+	   if (right == null) { return val; }
+	   return right.getLargest();
    }
 
 
@@ -72,7 +102,25 @@ public class BSTNode<T extends Comparable<T>>
     */
    public void inOrderTraversal(Consumer<T> consume)
    {
-
+	   if (left == null && right != null) 
+	   { 
+		   consume.accept(val);
+		   return; 
+	   }
+	   if (left == null) { return; }
+	   
+	   left.inOrderTraversal(consume);
+	   
+	   consume.accept(val);
+	   
+	   if (right == null && left != null) 
+	   { 
+		   consume.accept(val);
+		   return; 
+	   }
+	   if (right == null) { return; }
+	   
+	   right.inOrderTraversal(consume);
    }
 
 

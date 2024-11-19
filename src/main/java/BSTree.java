@@ -11,7 +11,6 @@ public class BSTree
 
    public BSTree()
    {
-   
        
    }
 
@@ -29,6 +28,8 @@ public class BSTree
      */
    public void insert(Integer target)
    {
+	   if (root==null) { root = new BSTNode(target); }
+	   else root.insert(target);
    }
 
 
@@ -38,7 +39,8 @@ public class BSTree
      */
    public Integer retrieve(Integer target)
    {
-	return null;
+	   if (root==null) { return null; }
+	   else return root.retrieve(target);
    }
 
 
@@ -52,8 +54,9 @@ public class BSTree
      */
    public int retrieveDepth(Integer target)
    {
-	return 0;
-       
+	   if (root == null) { return 0; }
+	   else return root.retrieveDepth(target);
+      
    }
 
     
@@ -95,8 +98,8 @@ public class BSTree
     */
    public Integer largest()
    {
-	return null;
-   
+	   if (root == null) { return null; }
+	   else return root.getLargest();
    }
 
 
