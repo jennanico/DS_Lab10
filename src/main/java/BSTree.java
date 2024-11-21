@@ -28,7 +28,7 @@ public class BSTree
      */
    public void insert(Integer target)
    {
-	   if (root==null) { root = new BSTNode(target); }
+	   if (root==null) { root = new BSTNode<Integer>(target); }
 	   else root.insert(target);
    }
 
