@@ -117,12 +117,12 @@ public class BSTree
       if(root != null)
       {
          root.inOrderTraversal(
-            //hey look, an anonymous class 		       
-            new Consumer<Integer>() //here is the type 
+     	       
+            new Consumer<Integer>() 
             {
                public void accept(Integer i)
                {
-               //need to add some code here...
+            	   L.add(i);
                }
             });
       }
@@ -131,15 +131,28 @@ public class BSTree
    
    }
 
-
-
+   
+   class SumConsumer implements Consumer<Integer>
+   {
+      public int nodes = 0;
+   
+      public void accept(Integer val)
+      {
+    	  nodes = nodes + (int) val;      
+      }
+   
+   }
 
     /*
       Returns the sum of all the integers in the Tree
      */
    public int sum()
    {
-	return 0;
+	   if(root==null) {return 0;}
+	   
+	   SumConsumer sum = new SumConsumer();
+	   root.inOrderTraversal(sum);
+	   return sum.nodes;
    }
 
 
@@ -156,8 +169,11 @@ public class BSTree
      */
    public boolean myEquals(BSTree that)
    {
-	return false;
-   
+	   if (root == null && that.root == null) { return true; }
+	   else if ((root == null && that.root != null) ||
+			    (root != null && that.root == null)) {return false;}
+	   
+	   else return root.myEquals(that.root);
    }
 
 

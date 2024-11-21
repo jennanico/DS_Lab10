@@ -102,25 +102,28 @@ public class BSTNode<T extends Comparable<T>>
     */
    public void inOrderTraversal(Consumer<T> consume)
    {
-	   if (left == null && right != null) 
+	   if (left == null && right == null) 
 	   { 
 		   consume.accept(val);
 		   return; 
 	   }
-	   if (left == null) { return; }
 	   
-	   left.inOrderTraversal(consume);
+	   if (left != null)
+	   {
+		   left.inOrderTraversal(consume);
+	   }
 	   
+	   if (right == null) 
+	   { 
+		   consume.accept(val);
+		   return; 
+	   }
+	  
 	   consume.accept(val);
 	   
-	   if (right == null && left != null) 
-	   { 
-		   consume.accept(val);
-		   return; 
-	   }
-	   if (right == null) { return; }
-	   
 	   right.inOrderTraversal(consume);
+	   
+	   return;
    }
 
 
@@ -134,8 +137,23 @@ public class BSTNode<T extends Comparable<T>>
 	    This one is long!
     */
    public boolean myEquals(BSTNode<T> that)
-   {
-	return false;
+   {   
+	   boolean equalsFlag = true;
+	   
+	   if ((left != null && that.left == null) ||
+	       (left == null && that.left != null)) { return false; }
+	   else if (left != null && that.left != null) { equalsFlag = left.myEquals(that.left); }
+	   
+	   if (equalsFlag == false) {return false;}
+	   
+	   if ((right != null && that.right == null) ||
+	       (right == null && that.right != null)) { return false; }
+	   else if (right != null && that.right != null) { equalsFlag = right.myEquals(that.right); }
+	   
+	   if (equalsFlag == false) {return false;}
+	   
+	   if (val != that.val) { return false; }
+	   return true;
    
 
    }
